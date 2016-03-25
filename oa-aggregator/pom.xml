@@ -18,6 +18,7 @@
 	<module>oa-dao</module>
     <module>oa-entity</module>
     <module>oa-service</module>
+    <module>oa-action</module>
   </modules> 
 
   <dependencies>
