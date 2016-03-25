@@ -1,0 +1,14 @@
+package try_everything.oa.service.inte;
+
+import java.util.List;
+
+import try_everything.oa.dao.inte.UserDao;
+import try_everything.oa.entity.User;
+
+public interface UserService  {
+	int addUser(User user);
+	List<User> findAllOrderByDate(Class<User> userClazz);
+	List<User> findByPageOrderByDate(Class<User> userClazz,int pageNo,int pageSize);
+	boolean deleteById(Integer id) throws Exception;
+	public int ValidLogin(User user);
+}

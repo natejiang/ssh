@@ -1,0 +1,8 @@
+1458544223314	Rename resource 'Beans.xsd'
+1458545908939	Move file
+1458697351545	Move 'beans.xml' to 'resources'
+1458886186245	Rename resource 'messge.properties'
+1458888289209	Rename resource 'messge_zh_CN.properties'
+1458888921102	Move 'message_zh_CN.properties' to 'java'
+1458888925015	Move 'message_en_US.properties' to 'java'
+1458888970755	Move 2 resources to 'resources'

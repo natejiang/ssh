@@ -1,0 +1,5 @@
+try_everything\oa\dao\impl\UserDaoHibernate4.class
+try_everything\oa\dao\inte\BaseDao.class
+try_everything\oa\dao\impl\BaseDaoHibernate4.class
+try_everything\oa\dao\App.class
+try_everything\oa\dao\inte\UserDao.class

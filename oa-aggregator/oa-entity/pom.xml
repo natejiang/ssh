@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>try-everything.oa</groupId>
+    <artifactId>oa-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../oa-parent/pom.xml</relativePath>
+  </parent>
+  <artifactId>oa-entity</artifactId>
+  <name>oa-entity</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+  	<!-- Hiberante -->  
+    <dependency>
+	  <groupId>org.hibernate.javax.persistence</groupId>
+	  <artifactId>hibernate-jpa-2.1-api</artifactId>
+    </dependency> 
+    <dependency>  
+      <groupId>org.hibernate</groupId>  
+      <artifactId>hibernate-core</artifactId>  
+    </dependency> 
+    <!-- junit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+  	<finalName>oa-entity</finalName>
+    <plugins>  
+       <plugin>  
+           <groupId>org.apache.maven.plugins</groupId>  
+           <artifactId>maven-compiler-plugin</artifactId>    
+       </plugin>  
+    </plugins>
+  </build>
+</project>

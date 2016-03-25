@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	<!-- 通过检验signature对请求进行校验。若确认此次GET请求来自微信服务器，请原样返回echostr参数内容，则接入生效，成为开发者成功，否则接入失败。 -->
+	<package name="wechat" extends="struts-default" namespace="/wechat">
+		<action name="signatureCheck_*" class="signatureCheckAction" method="{1}">
+			<result name="CheckedSuccess" type="stream">
+				<!-- 指定stream生成的响应数据的类型 -->
+				<param name="contentType">text/html</param>
+				<!-- 指定由getResult()方法返回输出结果的InputStream -->
+				<param name="inputName">result</param>
+			</result>
+			<result name="CheckedFailure">/index.jsp</result>
+		</action>
+	</package>
+</struts>

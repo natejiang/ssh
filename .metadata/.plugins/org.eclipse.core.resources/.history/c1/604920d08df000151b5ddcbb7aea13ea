@@ -1,0 +1,32 @@
+package try_everything.oa.dao;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+
+import try_everything.oa.dao.inte.UserDao;
+
+public class UserDaoTest {
+
+	ApplicationContext ctx = null;  
+	UserDao dao = null;  
+  
+	@Before  
+	public void beforeClass() {  
+	    ctx = new FileSystemXmlApplicationContext(  
+	            "beans.xml");  
+	    dao = (UserDao) ctx.getBean("UserDaoHibernate4");  
+	}  
+	  
+	@Test  
+	public void testSave() {  
+	    User user = new User();  
+	    user.setName("张文辉");  
+	user.setPassword("23");  
+	    dao.save(user);  
+	}    
+
+}

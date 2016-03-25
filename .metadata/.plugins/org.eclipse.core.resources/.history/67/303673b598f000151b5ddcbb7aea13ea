@@ -1,0 +1,32 @@
+package try_everything.oa.service;
+
+
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+
+import try_everything.oa.dao.inte.UserDao;
+import try_everything.oa.entity.User;
+
+public class UserServiceTest {
+
+	ApplicationContext ctx = null;  
+	UserDao dao = null;  
+  
+	@Before  
+	public void beforeClass() {  
+	    ctx = new FileSystemXmlApplicationContext(  
+	            "classpath*:beans.xml");  
+	    dao = (UserService) ctx.getBean("userService");  
+	}  
+	  
+	@Test  
+	public void testSave() {  
+	    User user = new User();  
+	    user.setUsername("姜南");
+	    user.setPassword("123");  
+	    dao.save(user);  
+	}    
+
+}

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+		xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:p="http://www.springframework.org/schema/p" 
+		xmlns:aop="http://www.springframework.org/schema/aop"
+ 		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+			http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd">
+		
+		<!-- 配置Hibernate SessionFactory  -->
+		<!-- 定义数据源Bean,使用C3P0数据源实现,并注入数据源的必要信息 -->
+		<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+			p:driverClass="com.mysql.jdbc.Driver"
+			p:jdbcUrl="jdbc:mysql://222.35.41.78/oa"
+			p:user="oa"
+			p:password="Tanker20120828"
+			p:maxPoolSize="40"
+			p:minPoolSize="2"
+			p:initialPoolSize="2"
+			p:maxIdleTime="1800" />
+		<!-- 定义HIbernate的SessionFactory,SessionFactory需要依赖数据源, 注入dataSource -->
+		<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+			p:dataSource-ref="dataSource">
+			<!-- annotatedClasses用来列出全部持久化类 -->
+			<property name="annotatedClasses">
+				<list>
+					<!-- 以下用来列出来所有的PO类 -->
+					<value>try_everything.oa.entity.User</value>
+				</list>
+			</property>
+			<!-- 定义HibernateSessionFactory属性 -->
+			<property name="hibernateProperties">
+				<props>
+					<!-- 指定Hibernate的连接方言 -->
+					<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+					<prop key="hibernate.hbm2ddl.auto">update</prop>
+					<prop key="hibernate.show_sql">true</prop>
+					<prop key="hibernate.format_sql">true</prop>
+					<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+				</props>
+			</property>
+		</bean>	
+		
+		<!-- 配置HibernateTransactionManager需要依赖注入SessionFactory -->
+		<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+			p:sessionFactory-ref="sessionFactory"/>
+			
+		<!-- 配置事务增强处理Bean,指定事务管理器 -->  
+		<tx:advice id="txAdvice" transaction-manager="transactionManager">
+			<tx:attributes>
+				<!-- 所有以get开头的方法是只读的 -->
+				<tx:method name="get" read-only="true" />
+				<!-- 其他方法使用默认的事务设置，指定超时时长为5秒 -->
+				<tx:method name="*" isolation="DEFAULT"
+					propagation="REQUIRED" timeout="5" />
+			</tx:attributes>
+		</tx:advice>	
+		<!-- AOP配置的元素 -->
+		<aop:config>
+			<!-- 配置一个切入点 -->
+			<aop:pointcut id="userServicePointcut" expression="bean(userService)"/>
+			<!-- 指定在userServerPointcut切入点应用txAdivice事务增强处理 -->
+			<aop:advisor advice-ref="txAdvice" pointcut-ref="userServicePointcut"/> 
+		</aop:config>
+		<!-- 定义Service组件，并将DAO组件注入Service组件 -->
+		<bean id="userService" class="try_everything.oa.service.impl.UserServiceImpl"
+			p:userDao-ref="userDao"/> 
+		<!-- 定义DAO组件，并将SessionFactory注入DAO组件 -->
+		<bean id="userDao" class="try_everything.oa.dao.impl.UserDaoHibernate4"	
+			p:sessionFactory-ref="sessionFactory"/>	
+		<!-- 国际化支持 -->	
+		<bean id="messageSource" class="org.springframework.context.support.ResourceBunleMessageSource">
+			<property name="basenames">
+				<list>
+					<value>message_en_US.properties</value>
+					<value>message_zh_CN.properties</value>
+				</list>
+			</property>
+			
+		</bean>
+			
+</beans>
